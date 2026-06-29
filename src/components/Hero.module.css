@@ -1,0 +1,359 @@
+/* ─────────────────────────────────────────
+   HERO SECTION
+───────────────────────────────────────── */
+:root {
+  --hero-bg: #03045e;
+  --hero-text: #ffffff;
+  --hero-text-muted: rgba(255,255,255,0.75);
+  --hero-text-soft: rgba(255,255,255,0.55);
+}
+
+
+
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  overflow: hidden;
+  background: var(--hero-bg);
+}
+
+/* ── TOP DARK BAND ─────────────────────── */
+.topSection {
+  flex: 0 0 28vh;
+  min-height: 130px;
+  background: transparent;
+  position: relative;
+  padding: 1.5rem 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tagline {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+.bigText {
+  position: absolute;
+  right: 4%;
+  bottom: 0;
+  margin: 0;
+  font-size: clamp(2.8rem, 9vw, 9rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+}
+
+/* ── MAIN IMAGE CONTAINER ──────────────── */
+.main {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+  background: var(--hero-bg);
+}
+
+.main::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+
+  width: 700px;
+  height: 700px;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.18) 0%,
+    rgba(255,255,255,0.08) 30%,
+    rgba(255,255,255,0.03) 55%,
+    transparent 75%
+  );
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heroBg {
+  object-fit: contain;
+  object-position: center bottom;
+  z-index: 1;
+
+  filter:
+    drop-shadow(0 0 25px rgba(255,255,255,0.12))
+    drop-shadow(0 0 60px rgba(255,255,255,0.08));
+}
+
+/* canvas — hero-2 revealed by waves */
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+}
+
+/* ── UI TEXT OVERLAY ───────────────────── */
+.ui {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  pointer-events: none; /* let mouse reach canvas underneath */
+}
+
+/* LEFT COLUMN */
+.left {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.forText {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 5rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+}
+
+.bottomLeft {
+  /* sits at bottom of left col */
+}
+
+.about {
+  margin: 0 0 0.35rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+
+.agencyText {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.2vw, 1.05rem);
+  font-weight: 400;
+  max-width: 210px;
+  line-height: 1.45;
+  color: #fff;
+}
+
+/* RIGHT COLUMN */
+.right {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.smallRight {
+  margin: 0;
+  font-size: 0.6rem;
+  line-height: 1.65;
+  max-width: 190px;
+  text-align: right;
+  color: rgba(255,255,255,0.6);
+}
+
+.shift {
+  margin: 0;
+  font-size: clamp(2.8rem, 7vw, 7rem);
+  font-weight: 900;
+  color: #fff;
+  text-align: right;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.5);
+}
+
+/* STATS CARD */
+.card {
+  pointer-events: all;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(6px);
+  padding: 1.2rem 1.4rem;
+  width: 250px;
+  border-left: 3px solid #03045e;
+}
+
+.cardTitle {
+  margin: 0 0 0.85rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats h3 {
+  margin: 0 0 3px;
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #03045e;
+  line-height: 1;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 0.62rem;
+  color: #555;
+  line-height: 1.3;
+}
+
+/* CTA CIRCLE */
+.cta {
+  pointer-events: all;
+  position: absolute;
+  left: 50%;
+  bottom: 2.5rem;
+  transform: translateX(-50%);
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: #03045e;
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.35;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.18);
+  transition: transform 0.22s ease, background 0.18s;
+}
+
+.cta:hover {
+  transform: translateX(-50%) scale(1.1);
+  background: #0a0aaa;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE  ≤ 768px
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  /* top band collapses to auto height */
+  .topSection {
+    flex: none;
+    min-height: unset;
+    padding: 1rem 1.2rem 0;
+  }
+
+  .bigText {
+    position: static;
+    display: block;
+    font-size: clamp(2.2rem, 11vw, 3.6rem);
+    text-align: right;
+    padding-bottom: 0.25rem;
+  }
+
+  /* image area takes remaining viewport */
+  .main {
+    height: 70svh;
+    min-height: 400px;
+  }
+
+  .heroBg {
+    object-position: center center;
+  }
+
+  /* stack left + right vertically */
+  .ui {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .left {
+    flex: none;
+    padding: 1rem 1.2rem 0;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .forText {
+    font-size: clamp(1.6rem, 8vw, 2.6rem);
+  }
+
+  .bottomLeft {
+    text-align: right;
+  }
+
+  .agencyText {
+    max-width: 150px;
+    font-size: 0.72rem;
+  }
+
+  .right {
+    flex: none;
+    padding: 0 1.2rem 1.2rem;
+    align-items: flex-start;
+  }
+
+  .smallRight {
+    display: none;
+  }
+
+  .shift {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    text-align: left;
+  }
+
+  .card {
+    width: 100%;
+    margin-top: 0.6rem;
+  }
+
+  /* CTA repositioned to bottom-right on mobile */
+  .cta {
+    left: unset;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    transform: none;
+    width: 74px;
+    height: 74px;
+    font-size: 0.53rem;
+  }
+
+  .cta:hover {
+    transform: scale(1.08);
+  }
+}
+
+/* ─────────────────────────────────────────
+   REDUCED MOTION
+───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cta { transition: none; }
+}

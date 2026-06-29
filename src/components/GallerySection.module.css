@@ -1,0 +1,151 @@
+/* ══════════════════════════════════════════════════════════════════
+   GALLERY SECTION
+   Horizontal infinite-scroll strip with parallax + snap.
+   Background: deep dark matching the site's #0d0d0d shell.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Section shell ────────────────────────────────────────────── */
+.section {
+  position: relative;
+  width: 100%;
+  background: #0d0d0d;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+  touch-action: pan-y;
+}
+
+/* ── Title block (top-left) ───────────────────────────────────── */
+.titleBlock {
+  position: relative;
+  z-index: 2;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4175FC;
+  margin: 0 0 0.5rem;
+}
+
+.heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.05;
+  margin: 0 0 0.4rem;
+  opacity: 0.95;
+}
+
+.subTitle {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  color: rgba(255, 255, 255, 0.38);
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+/* ── Hint label (bottom-left) ────────────────────────────────── */
+.hint {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  margin: 0 0 clamp(1rem, 2vw, 1.5rem) clamp(1.25rem, 4vw, 3rem);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  letter-spacing: 0.03em;
+}
+
+/* ── Page wrapper clips the horizontal overflow ──────────────── */
+.pageWrapper {
+  width: 100%;
+  position: relative;
+}
+
+/* ── Gallery strip ────────────────────────────────────────────── */
+.galleryContainer {
+  display: flex;
+  overflow-x: hidden;     /* JS drives scrollLeft directly        */
+  padding: 20px 0;
+  gap: 15px;
+  scroll-behavior: auto;  /* disable smooth scroll — JS handles it */
+  /* no scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.galleryContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Individual card ──────────────────────────────────────────── */
+.galleryItem {
+  position: relative;
+  flex: 0 0 580px;
+  height: 380px;
+  border-radius: 10px;
+  overflow: hidden;
+  will-change: transform;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.55),
+    0 1px 4px  rgba(0, 0, 0, 0.35);
+  transition: box-shadow 0.3s ease;
+}
+
+.galleryItem:hover {
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+/* Image fills the card; JS animates transform for parallax */
+.galleryItem img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%); /* JS overwrites this per frame */
+  will-change: transform;
+  pointer-events: none;
+  user-select: none;
+  draggable: false;
+}
+
+/* ── Responsive card sizes ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .galleryItem {
+    flex: 0 0 340px;
+    height: 230px;
+  }
+}
+
+@media (max-width: 768px) {
+  .galleryItem {
+    flex: 0 0 260px;
+    height: 180px;
+  }
+  .galleryContainer {
+    padding: 16px 0;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .galleryItem {
+    flex: 0 0 200px;
+    height: 140px;
+  }
+  .galleryContainer {
+    padding: 12px 0;
+    gap: 10px;
+  }
+}

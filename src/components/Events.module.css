@@ -1,0 +1,365 @@
+/* ── Section ───────────────────────────────────────────────────────────── */
+.section {
+  position: relative;
+  background: #e0e5ec;
+  overflow: hidden;
+}
+
+/* ── Background image ──────────────────────────────────────────────────── */
+.bgImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Desktop: small centred watermark */
+.bgImg {
+  object-fit: contain;
+  object-position: center;
+  width: 22% !important;
+  height: 40% !important;
+  left: 50% !important;
+  top: 28% !important;
+  transform: translateX(-50%) !important;
+  filter: blur(3px) saturate(0.18) brightness(1.1);
+  opacity: 0.5;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(224, 229, 236, 0.9);
+}
+
+/* ── Section header ────────────────────────────────────────────────────── */
+.sectionHeader {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3.5rem 2rem 1.5rem;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6f42c1;
+  margin: 0 0 0.6rem;
+}
+
+.heading {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #2d3436;
+  margin: 0 0 0.5rem;
+  line-height: 1.1;
+}
+
+.sub {
+  font-size: 0.95rem;
+  color: #636e72;
+  margin: 0;
+}
+
+/* ── Pinned scroll wrapper ─────────────────────────────────────────────── */
+.scrollWrapper {
+  position: relative;
+  z-index: 2;
+  width: 100vw;
+  /* tall enough for cards to breathe without excess whitespace */
+  height: 82vh;
+  overflow: hidden;
+}
+
+/* ── Scroll hint ───────────────────────────────────────────────────────── */
+.scrollHint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 700;
+  color: #636e72;
+  z-index: 100;
+  background: #e0e5ec;
+  padding: 8px 18px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  box-shadow:
+    4px 4px 10px #a3b1c6,
+    -4px -4px 10px #ffffff;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%       { transform: translate(-50%, -10px); }
+}
+
+/* ── Horizontal canvas ─────────────────────────────────────────────────── */
+.canvas {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* width is set inline from TSX constants so it always fits all cards */
+  height: 900px;
+  will-change: transform;
+}
+
+/* ── SVG lines ─────────────────────────────────────────────────────────── */
+.linesLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.linePath {
+  stroke: #2d3436;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* ── Claymorphism base ─────────────────────────────────────────────────── */
+.clayElement {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: #e0e5ec;
+  box-shadow:
+    12px 12px 24px #a3b1c6,
+    -12px -12px 24px #ffffff;
+  z-index: 2;
+}
+
+/* ── Connector dots ────────────────────────────────────────────────────── */
+.connectorDot {
+  width: 18px;
+  height: 18px;
+  background: #2d3436;
+  border: 4px solid #e0e5ec;
+  border-radius: 50%;
+  box-shadow:
+    4px 4px 10px #a3b1c6,
+    -4px -4px 10px #ffffff;
+  z-index: 3;
+}
+
+/* ── Plus buttons ──────────────────────────────────────────────────────── */
+.plusBtn {
+  width: 40px;
+  height: 40px;
+  background: #2d3436;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 4;
+  border: 2px solid #e0e5ec;
+  box-shadow:
+    6px 6px 12px #a3b1c6,
+    -6px -6px 12px #ffffff,
+    inset 2px 2px 4px rgba(255,255,255,0.2),
+    inset -2px -2px 4px rgba(0,0,0,0.4);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  user-select: none;
+}
+
+.plusBtn:hover {
+  background: #6f42c1;
+  transform: translate(-50%, -50%) scale(1.15) !important;
+}
+
+/* ── Event card ────────────────────────────────────────────────────────── */
+.card {
+  width: 250px;
+  height: 260px;
+  border-radius: 28px;
+  border: 3px solid rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
+  background: #e0e5ec;
+}
+
+.card:hover {
+  transform: translate(-50%, -58%) !important;
+  box-shadow:
+    20px 20px 40px #a3b1c6,
+    -20px -20px 40px #ffffff;
+  z-index: 10;
+}
+
+/* Image top */
+.cardVideoWrap {
+  position: relative;
+  height: 185px;
+  width: 100%;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+  background: #2d3436;
+}
+
+.thumbnail {
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.75;
+  mix-blend-mode: hard-light;
+}
+
+.headerBadges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.badgeGroup {
+  display: flex;
+  gap: 6px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #fff;
+  box-shadow:
+    inset 2px 2px 4px rgba(255,255,255,0.3),
+    2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.badgeIcon {
+  padding: 5px 8px;
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 12px;
+}
+
+.cardDate {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  z-index: 3;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Stats bottom strip */
+.cardStats {
+  height: 75px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #e0e5ec;
+  border-radius: 0 0 24px 24px;
+  box-shadow: inset 0 3px 5px rgba(0,0,0,0.04);
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.statVal {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #2d3436;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.statLbl {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #636e72;
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+.cardTitle {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #2d3436;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.gsReveal {
+  /* GSAP targets this class */
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .scrollWrapper { height: 78vh; }
+}
+
+@media (max-width: 768px) {
+  .sectionHeader { padding: 2.5rem 1.5rem 1rem; }
+  .scrollWrapper { height: 72vh; }
+
+  /* bg image: wider on tablet */
+  .bgImg {
+    width: 50% !important;
+    height: 35% !important;
+    top: 32% !important;
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionHeader { padding: 2rem 1rem 0.75rem; }
+  .heading { font-size: 1.6rem; }
+  .scrollWrapper { height: 68vh; }
+
+  /* bg image: full-width watermark on mobile */
+  .bgImg {
+    width: 85% !important;
+    height: 28% !important;
+    top: 36% !important;
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollHint { animation: none; }
+}

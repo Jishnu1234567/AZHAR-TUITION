@@ -1,0 +1,423 @@
+/* ═══════════════════════════════════════════════════════
+   Faculty Section  –  Carousel layout
+   Breakpoints:  mobile ≤ 600 | tablet 601–1024 | desktop ≥ 1025
+   ═══════════════════════════════════════════════════════ */
+
+/* ── CSS custom properties ───────────────────── */
+.facultySection {
+  --card-w:     420px;   /* active card width    (desktop)  */
+  --card-h:     72vh;    /* card height          (desktop)  */
+  --card-w-md:  320px;   /* active card width    (tablet)   */
+  --card-h-md:  60vh;    /* card height          (tablet)   */
+  --card-w-sm:  220px;   /* active card width    (mobile)   */
+  --card-h-sm:  55vw;    /* card height          (mobile)   */
+  --blue:       #4175FC;
+  --cyan:       #00c8ff;
+
+  padding: clamp(3rem, 6vw, 5.5rem) 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Section header ──────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  padding: 0 1.25rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin: 0 0 0.65rem;
+}
+
+.heading {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 800;
+  color: var(--white, #fff);
+  line-height: 1.08;
+  margin: 0 0 0.6rem;
+}
+
+.subheading {
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  color: var(--text-muted, rgba(255,255,255,0.52));
+  max-width: 42ch;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* ══════════════════════════════════════════════
+   CAROUSEL
+   ══════════════════════════════════════════════ */
+.carousel {
+  display: grid;
+}
+
+/* ── Navigation buttons ──────────────────────── */
+.carouselNav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0 clamp(1rem, 3vw, 2rem) 1rem;
+  grid-row: 1;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.45em 1.1em;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  line-height: 1;
+}
+
+.navBtn:hover {
+  background: rgba(65,117,252,0.2);
+  border-color: rgba(65,117,252,0.45);
+  color: #fff;
+}
+
+.navBtn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── List track ──────────────────────────────── */
+.carouselList {
+  display: flex;
+  overflow: hidden;
+  list-style: none;
+  padding: 1.25em 0 2.5em;
+  margin: 0;
+  contain: layout;
+  isolation: isolate;
+}
+
+/* ══════════════════════════════════════════════
+   CARD  (individual slide)
+   ══════════════════════════════════════════════ */
+.carouselItem {
+  display: grid;
+  position: relative;
+  align-content: start;
+  margin: 0 8px;
+  padding: 0;
+  flex: 1 1 10%;
+  height: var(--card-h);
+  overflow: hidden;
+  background: rgba(255,255,255,0.07);
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow:
+    0 3px 15px 2px  rgba(0,0,0,0.40),
+    0 12px 28px 0px rgba(0,0,0,0.22),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+  contain: layout;
+  isolation: isolate;
+  transform: translate3d(0,0,0.1px);
+}
+
+/* All transitions on card + children */
+.carouselItem,
+.carouselItem * {
+  transition: all 0.58s cubic-bezier(0.55,0.24,0.18,1);
+  user-select: none;
+}
+
+/* Hover expands to half the active width */
+.carouselItem:hover {
+  flex-basis: calc(var(--card-w) * 0.48);
+  transition: flex-basis 0.28s ease;
+}
+
+/* Active card full width */
+.carouselItem[data-active] {
+  flex-basis: var(--card-w);
+  flex-grow: 0;
+}
+
+/* ── Fallback avatar (behind photo) ──────────── */
+.avatarFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,
+    rgba(65,117,252,0.22) 0%,
+    rgba(0,200,255,0.13) 100%);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  color: rgba(255,255,255,0.13);
+  z-index: 0;
+}
+
+/* ── Photo ───────────────────────────────────── */
+.carouselImage {
+  display: block;
+  position: absolute;
+  width: var(--card-w);
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  object-fit: cover;
+  object-position: top center;
+  aspect-ratio: 2 / 3;
+  filter: saturate(0.22) contrast(0.78) brightness(1.08);
+  pointer-events: none;
+}
+
+/* ── Colour-wash gradient overlay ────────────── */
+.carouselItem::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    158deg,
+    rgba(2,0,36,0) 38%,
+    rgba(65,117,252,0.42) 68%,
+    rgba(0,200,255,0.52) 100%
+  );
+  transition: all 0.62s cubic-bezier(0.55,0.24,0.18,1);
+}
+
+/* Slide the wash away when card is active */
+.carouselItem[data-active]::after {
+  transform: translateY(105%);
+}
+
+/* Fully saturated + visible when active */
+.carouselItem[data-active],
+.carouselItem[data-active] * {
+  opacity: 1;
+  filter: none;
+}
+
+/* ── Text overlay ────────────────────────────── */
+.carouselContents {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  min-height: 160px;
+  padding: 0.9em;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--card-w);
+  background-image: radial-gradient(
+    ellipse at 0px 0px,
+    rgba(0,0,0,0.48) 18%,
+    transparent 52%
+  );
+  background-size: 170% 190px;
+  background-repeat: no-repeat;
+}
+
+.userName {
+  margin: 0;
+  color: #e8eff4;
+  font-size: clamp(1rem, 2.2vw, 1.55em);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1.1;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.32);
+  opacity: 0;
+  transform: translateX(-180px);
+  transition-duration: 0.95s;
+  max-width: 16em;
+}
+
+.userTitle {
+  margin: 0 0 0.45em;
+  font-size: clamp(0.6rem, 1.2vw, 0.78em);
+  letter-spacing: 1.1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: transparent;
+  background: linear-gradient(270deg, var(--blue), var(--cyan));
+  background-clip: text;
+  -webkit-background-clip: text;
+  opacity: 0;
+  line-height: 1.2;
+  transform: translateX(-180px);
+  transition-duration: 0.95s;
+  max-width: 16em;
+}
+
+/* Animate text in when active */
+.carouselItem[data-active] .carouselContents * {
+  transform: translateX(0);
+  transition-duration: 0.62s;
+  opacity: 1;
+}
+.carouselItem[data-active] .userName    { transition-delay: 0.1s;  }
+.carouselItem[data-active] .userTitle   { opacity: 0.92; transition-delay: 0.04s; }
+
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE  –  Desktop ≥ 1025px  (default above is fine,
+   but tighten a few values for very wide screens)
+   ══════════════════════════════════════════════ */
+@media screen and (min-width: 1280px) {
+  .facultySection {
+    --card-w: 480px;
+    --card-h: 76vh;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE  –  Tablet  601px – 1024px
+   ══════════════════════════════════════════════ */
+@media screen and (max-width: 1024px) and (min-width: 601px) {
+  .facultySection {
+    --card-w: var(--card-w-md);
+    --card-h: var(--card-h-md);
+  }
+
+  .carouselItem {
+    margin: 0 6px;
+    border-radius: 12px;
+  }
+
+  .carouselImage {
+    width: var(--card-w-md);
+  }
+
+  .carouselContents {
+    width: var(--card-w-md);
+    min-height: 130px;
+  }
+}
+
+/* ── nth-child visibility rules for ≥ 601px ─── */
+@media screen and (min-width: 601px) {
+  /* Pinch extreme edges */
+  .carouselItem:nth-child(3),
+  .carouselItem:nth-child(10) { flex: 0 0 10px; }
+
+  .carouselItem:nth-child(2)  { flex: 0 0 5px; transform: translateX(-50px); }
+  .carouselItem:nth-child(11) { flex: 0 0 5px; transform: translateX(50px);  }
+
+  /* Collapse + hide outside the window */
+  .carouselItem:nth-child(1),
+  .carouselItem:nth-child(n+12) {
+    flex: 0 0 0px;
+    margin: 0;
+    box-shadow: none;
+    opacity: 0 !important;
+  }
+
+  /* Desaturate photos near edges */
+  .carouselItem:not(:nth-child(n+5)) img,
+  .carouselItem:nth-child(n+9) img   { opacity: 0.7; }
+
+  /* Hide text near edges */
+  .carouselItem:not(:nth-child(n+4)) *,
+  .carouselItem:nth-child(n+10) *    { opacity: 0 !important; }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE  –  Mobile  ≤ 600px
+   ══════════════════════════════════════════════ */
+@media screen and (max-width: 600px) {
+  .facultySection {
+    --card-w: var(--card-w-sm);
+    --card-h: 52vw;
+  }
+
+  .carouselItem {
+    flex-basis: 10%;
+    margin: 0 4px;
+    border-radius: 8px;
+    font-size: 2.8vw;
+  }
+
+  .carouselItem[data-active] {
+    flex-basis: 48%;
+    flex-grow: 0;
+  }
+
+  .carouselItem:hover {
+    flex-basis: calc(var(--card-w-sm) * 0.5);
+  }
+
+  .carouselImage {
+    width: var(--card-w-sm);
+  }
+
+  .carouselContents {
+    width: var(--card-w-sm);
+    min-height: 100px;
+    padding: 0.65em;
+  }
+
+  /* Pinch extreme edges */
+  .carouselItem:nth-child(3),
+  .carouselItem:nth-child(7) { flex: 0 0 10px; }
+
+  .carouselItem:nth-child(2) { flex: 0 0 5px; transform: translateX(-40px); }
+  .carouselItem:nth-child(8) { flex: 0 0 5px; transform: translateX(40px);  }
+
+  /* Collapse + hide outside the window */
+  .carouselItem:nth-child(1),
+  .carouselItem:nth-child(n+9) {
+    flex: 0 0 0px;
+    margin: 0;
+    box-shadow: none;
+    opacity: 0 !important;
+  }
+
+  /* Desaturate near edges */
+  .carouselItem:not(:nth-child(n+5)) img,
+  .carouselItem:nth-child(n+7)  img  { opacity: 0.75; }
+
+  /* Hide text near edges */
+  .carouselItem:not(:nth-child(n+4)) *,
+  .carouselItem:nth-child(n+7)  *    { opacity: 0 !important; }
+
+  /* Rotate text overlay on small screens */
+  .carouselContents {
+    transform: translateX(-100%) rotate(90deg);
+    transform-origin: bottom right;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background-image: radial-gradient(
+      ellipse at 100% 100%,
+      rgba(0,0,0,0.42) 0%,
+      transparent 52%
+    );
+    background-position: -100% 100%;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: right;
+  }
+
+  .carouselItem[data-active] .carouselContents {
+    background-position: 100% 100%;
+  }
+
+  .userName,
+  .userTitle { transform: translateX(160px); }
+
+  .carouselItem[data-active] .carouselContents * {
+    transform: translateX(0);
+  }
+}
